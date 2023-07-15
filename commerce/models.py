@@ -127,9 +127,7 @@ class Category(Entity):
 
 
     def __str__(self):
-        if self.parent:
-            return f'-   {self.name}'
-        return f'{self.name}'
+        return f'-   {self.name}' if self.parent else f'{self.name}'
 
     class Meta:
         verbose_name = 'category'

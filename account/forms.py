@@ -85,7 +85,7 @@ class AccountUpdateForm(forms.ModelForm):
                 User.objects.exclude(pk=self.instance.pk).get(email=email)
             except User.DoesNotExist:
                 return email
-            raise forms.ValidationError("Email '%s' already in use." % email)
+            raise forms.ValidationError(f"Email '{email}' already in use.")
 
 
 class UserAdminCreationForm(forms.ModelForm):
