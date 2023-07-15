@@ -109,8 +109,9 @@ select * from merchant where id in (mids) * 4 for (label, category and vendor)
 @check_pk
 def list_addresses(request):
     
-    addresses = Address.objects.select_related('city', 'user').filter(user=User.objects.get(id=request.auth['pk']))
-    if addresses:
+    if addresses := Address.objects.select_related('city', 'user').filter(
+        user=User.objects.get(id=request.auth['pk'])
+    ):
         return addresses
     return 404, {'detail': 'No addresses found'}
 
@@ -125,9 +126,7 @@ def list_addresses(request):
     404: MessageOut
 })
 def list_cities(request):
-    cities_qs = City.objects.all()
-
-    if cities_qs:
+    if cities_qs := City.objects.all():
         return cities_qs
 
     return 404, {'detail': 'No cities found'}
@@ -188,9 +187,9 @@ def delete_city(request, id: UUID4):
 @check_pk
 def view_cart(request):
     
-    cart_items = Item.objects.filter(user=User.objects.get(id=request.auth['pk']), ordered=False)
-
-    if cart_items:
+    if cart_items := Item.objects.filter(
+        user=User.objects.get(id=request.auth['pk']), ordered=False
+    ):
         return cart_items
 
     return 404, {'detail': 'Your cart is empty, go shop like crazy!'}
